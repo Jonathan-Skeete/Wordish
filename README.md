@@ -14,3 +14,5 @@ The second row of "* * * * *" will display the keyword upon completing all 6 gue
 There is also a restart button to start the game over at any point.
 
 When the game is over you must press the restart button if you would like to play again.
+
+Here is a link to the game as well: https://snack.expo.dev/@jskeete54/wordish
