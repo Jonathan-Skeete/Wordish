@@ -37,6 +37,7 @@ export default function App() {
     {
       setResult(randomWord);
       setAnswer(randomWord);
+      setInput1Editable(false);
       setShowConfetti(true);
       return;
     }
@@ -91,6 +92,7 @@ export default function App() {
     {
       setResult(randomWord);
       setAnswer(randomWord);
+      setInput2Editable(false);
       setShowConfetti(true);
       return;
     }
@@ -145,6 +147,7 @@ export default function App() {
     {
       setResult(randomWord);
       setAnswer(randomWord);
+      setInput3Editable(false);
       setShowConfetti(true);
       return;
     }
@@ -198,6 +201,8 @@ export default function App() {
     if (text4.toUpperCase() === randomWord) 
     {
       setResult(randomWord);
+      setAnswer(randomWord);
+      setInput4Editable(false);
       setShowConfetti(true);
       return;
     }
@@ -252,6 +257,7 @@ export default function App() {
     {
       setResult(randomWord);
       setAnswer(randomWord);
+      setInput5Editable(false);
       setShowConfetti(true);
       return;
     }
@@ -305,6 +311,8 @@ export default function App() {
     if (text6.toUpperCase() === randomWord) 
     {
       setResult(randomWord);
+      setAnswer(randomWord);
+      setInput6Editable(false);
       setShowConfetti(true);
       return;
     }
