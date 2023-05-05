@@ -1,35 +1,78 @@
 import * as React from 'react';
 import { Button, Text, View, SafeAreaView, StyleSheet, TouchableWithoutFeedback, Keyboard, ScrollView, TextInput } from 'react-native';
-import * as Updates from 'expo-updates';
 import Constants from 'expo-constants';
-import { useEffect } from 'react';
 import ConfettiCannon from 'react-native-confetti-cannon';
 
 // You can import from local files
-import { words } from './components/words';
+import { getRandomWord, isalpha, words } from './components/words';
+import ShakeAnimation from './components/shake';
 
-function getRandomWord() {
-  const randomIndex = Math.floor(Math.random() * words.length);
-  return words[randomIndex];
-}
-
-function isalpha(str) {
-  return /^[a-zA-Z]+$/.test(str);
-}
-
-const randomWord = getRandomWord();
 
 export default function App() {
+  const input1Ref = React.useRef(null);
   const input2Ref = React.useRef(null);
   const input3Ref = React.useRef(null);
   const input4Ref = React.useRef(null);
   const input5Ref = React.useRef(null);
   const input6Ref = React.useRef(null);
+  const [input1Editable, setInput1Editable] = React.useState(true);
+  const [input2Editable, setInput2Editable] = React.useState(false);
+  const [input3Editable, setInput3Editable] = React.useState(false);
+  const [input4Editable, setInput4Editable] = React.useState(false);
+  const [input5Editable, setInput5Editable] = React.useState(false);
+  const [input6Editable, setInput6Editable] = React.useState(false);
+  const [isFocused1, setIsFocused1] = React.useState(true);
+  const [isFocused2, setIsFocused2] = React.useState(false);
+  const [isFocused3, setIsFocused3] = React.useState(false);
+  const [isFocused4, setIsFocused4] = React.useState(false);
+  const [isFocused5, setIsFocused5] = React.useState(false);
+  const [isFocused6, setIsFocused6] = React.useState(false);
+  const [text1, setText1] = React.useState('');
+  const [text2, setText2] = React.useState('');
+  const [text3, setText3] = React.useState('');
+  const [text4, setText4] = React.useState('');
+  const [text5, setText5] = React.useState('');
+  const [text6, setText6] = React.useState('');
+  const [result, setResult] = React.useState("*  *  *  *  *");
+  const [answer, setAnswer] = React.useState("*  *  *  *  *");
+  const [letters, setLetters] = React.useState("");
+  const [randomWord, setRandomWord] = React.useState(React.useEffect(() => setRandomWord(getRandomWord()), []));
+  const dismissKeyboard = () => { Keyboard.dismiss();};
+  const [showConfetti, setShowConfetti] = React.useState(false);
+  const cannonRef = React.useRef(null);
+  const [shouldShake, setShouldShake] = React.useState(false);
+
+  const restart_game = () => {
+    setInput1Editable(true);
+    setInput2Editable(false);
+    setInput3Editable(false);
+    setInput4Editable(false);
+    setInput5Editable(false);
+    setInput6Editable(false);
+    setIsFocused1(true);
+    setIsFocused2(false);
+    setIsFocused3(false);
+    setIsFocused4(false);
+    setIsFocused5(false);
+    setIsFocused6(false);
+    setText1("");
+    setText2("");
+    setText3("");
+    setText4("");
+    setText5("");
+    setText6("");
+    setAnswer("*  *  *  *  *");
+    setResult("*  *  *  *  *");
+    setLetters("");
+    setRandomWord(getRandomWord());
+  }
 
   const handleInput1Submit = () => {
 
-    if (text1.length < 5 || !isalpha(text1))
+    if (text1.length < 5 || !isalpha(text1) || !words.includes(text1))
     {
+      setShouldShake(true);
+      setTimeout(() => setShouldShake(false), 3000);
       return;
     }
   
@@ -82,10 +125,13 @@ export default function App() {
     setInput2Editable(true);
     setIsFocused2(true);
   };
+  
 
   const handleInput2Submit = () => {
-    if (text2.length < 5 || !isalpha(text2))
+    if (text2.length < 5 || !isalpha(text2) || !words.includes(text2))
     {
+      setShouldShake(true);
+      setTimeout(() => setShouldShake(false), 3000);
       return;
     }
     if (text2.toUpperCase() === randomWord) 
@@ -139,8 +185,10 @@ export default function App() {
   };
 
   const handleInput3Submit = () => {
-    if (text3.length < 5 || !isalpha(text3))
+    if (text3.length < 5 || !isalpha(text3) || !words.includes(text3))
     {
+      setShouldShake(true);
+      setTimeout(() => setShouldShake(false), 3000);
       return;
     }
     if (text3.toUpperCase() === randomWord) 
@@ -194,8 +242,10 @@ export default function App() {
   };
 
   const handleInput4Submit = () => {
-    if (text4.length < 5 || !isalpha(text4))
+    if (text4.length < 5 || !isalpha(text4) || !words.includes(text4))
     {
+      setShouldShake(true);
+      setTimeout(() => setShouldShake(false), 3000);
       return;
     }
     if (text4.toUpperCase() === randomWord) 
@@ -249,8 +299,10 @@ export default function App() {
   };
 
   const handleInput5Submit = () => {
-    if (text5.length < 5 || !isalpha(text5))
+    if (text5.length < 5 || !isalpha(text5) || !words.includes(text5))
     {
+      setShouldShake(true);
+      setTimeout(() => setShouldShake(false), 3000);
       return;
     }
     if (text5.toUpperCase() === randomWord) 
@@ -304,8 +356,10 @@ export default function App() {
   };
 
   const handleInput6Submit = () => {
-    if (text6.length < 5 || !isalpha(text6))
+    if (text6.length < 5 || !isalpha(text6) || !words.includes(text6))
     {
+      setShouldShake(true);
+      setTimeout(() => setShouldShake(false), 3000);
       return;
     }
     if (text6.toUpperCase() === randomWord) 
@@ -316,42 +370,6 @@ export default function App() {
       setShowConfetti(true);
       return;
     }
-    /*let display_word6 = "";
-    let display_letters6 = new Set();
-    for (let i = 0; i < 5; i++)
-    {
-      if (text6[i].toUpperCase() === randomWord[i])
-      {
-        display_word6 += randomWord[i];
-      }
-      else
-      {
-        if (i < 4)
-        {
-          display_word6 += "*  ";
-        }
-        else
-        {
-          display_word6 += "*";
-        }
-      }
-      if (text6[i] != randomWord[i])
-      {
-        for (let j = 0; j < 5;j++)
-        {
-          if (i === j)
-          {
-            continue;
-          }
-          if (text6[i] === randomWord[j])
-          {
-            display_letters6.add(randomWord[j]);
-          }
-        }
-      }
-    }
-    setLetters(Array.from(display_letters6).join(' - '));
-    setResult(display_word6);*/
     setInput6Editable(false);
     setAnswer(randomWord);
   };
@@ -380,32 +398,9 @@ export default function App() {
     setText6(newText);
   };
 
-  const [input1Editable, setInput1Editable] = React.useState(true);
-  const [input2Editable, setInput2Editable] = React.useState(false);
-  const [input3Editable, setInput3Editable] = React.useState(false);
-  const [input4Editable, setInput4Editable] = React.useState(false);
-  const [input5Editable, setInput5Editable] = React.useState(false);
-  const [input6Editable, setInput6Editable] = React.useState(false);
-  const [isFocused2, setIsFocused2] = React.useState(false);
-  const [isFocused3, setIsFocused3] = React.useState(false);
-  const [isFocused4, setIsFocused4] = React.useState(false);
-  const [isFocused5, setIsFocused5] = React.useState(false);
-  const [isFocused6, setIsFocused6] = React.useState(false);
-  const [text1, setText1] = React.useState('');
-  const [text2, setText2] = React.useState('');
-  const [text3, setText3] = React.useState('');
-  const [text4, setText4] = React.useState('');
-  const [text5, setText5] = React.useState('');
-  const [text6, setText6] = React.useState('');
-  const [result, setResult] = React.useState("*  *  *  *  *");
-  const [answer, setAnswer] = React.useState("*  *  *  *  *");
-  const [letters, setLetters] = React.useState("");
-  const dismissKeyboard = () => { Keyboard.dismiss();};
-  const reloadApp = async () => {await Updates.reloadAsync();};
-  const [showConfetti, setShowConfetti] = React.useState(false);
-  const cannonRef = React.useRef(null);
+  
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (showConfetti) 
     {
       cannonRef.current?.start();
@@ -425,22 +420,27 @@ export default function App() {
       <ScrollView style={styles.body}>
         <TouchableWithoutFeedback onPress={dismissKeyboard}>
         <View style={styles.inputContainer}>
-          <TextInput key="textInput1" 
-                    style={[styles.inputs, {color: "textColor"}]}
-                    placeholder="Type Here"
-                    autoCapitalize="characters"
-                    maxLength={5}
-                    onChangeText={onChangeText1}
-                    value={text1}
-                    onPaste={(event) => { event.preventDefault(); }}
-                    editable={input1Editable}
-                    onSubmitEditing={handleInput1Submit}
-          />
+          <ShakeAnimation shouldShake={shouldShake}>
+            <TextInput key="textInput1" 
+                      ref={input1Ref}
+                      style={[styles.inputs, {color: "textColor"}]}
+                      placeholder={isFocused1 ? "Type Here" : ""}
+                      autoCapitalize="characters"
+                      autoCorrect={false}
+                      maxLength={5}
+                      onChangeText={onChangeText1}
+                      value={text1}
+                      onPaste={(event) => { event.preventDefault(); }}
+                      editable={input1Editable}
+                      onSubmitEditing={handleInput1Submit}
+            />
+          </ShakeAnimation>
           <TextInput key="textInput2" 
                     ref={input2Ref}
                     placeholder={isFocused2 ? "Type Here" : ""}
                     style={[styles.inputs, {color: "textColor"}]}
                     autoCapitalize="characters"
+                    autoCorrect={false}
                     maxLength={5}
                     onChangeText={onChangeText2}
                     value={text2}
@@ -453,6 +453,7 @@ export default function App() {
                     placeholder={isFocused3 ? "Type Here" : ""}
                     style={[styles.inputs, {color: "textColor"}]}
                     autoCapitalize="characters"
+                    autoCorrect={false}
                     maxLength={5}
                     onChangeText={onChangeText3}
                     value={text3}
@@ -465,6 +466,7 @@ export default function App() {
                     placeholder={isFocused4 ? "Type Here" : ""}
                     style={[styles.inputs, {color: "textColor"}]}
                     autoCapitalize="characters"
+                    autoCorrect={false}
                     maxLength={5}
                     onChangeText={onChangeText4}
                     value={text4}
@@ -477,6 +479,7 @@ export default function App() {
                     placeholder={isFocused5 ? "Type Here" : ""}
                     style={[styles.inputs, {color: "textColor"}]}
                     autoCapitalize="characters"
+                    autoCorrect={false}
                     maxLength={5}
                     onChangeText={onChangeText5}
                     value={text5}
@@ -489,6 +492,7 @@ export default function App() {
                     placeholder={isFocused6 ? "Type Here" : ""}
                     style={[styles.inputs, {color: "textColor"}]}
                     autoCapitalize="characters"
+                    autoCorrect={false}
                     maxLength={5}
                     onChangeText={onChangeText6}
                     value={text6}
@@ -501,9 +505,9 @@ export default function App() {
         </TouchableWithoutFeedback>
         <Text style={styles.sofar}>{result}</Text>
         <Text style={styles.letters}>{letters}</Text>
-        <Text style={styles.answer}>{answer}</Text>
-        <View>
-          <Button style={styles.restart} color="red" title="Restart Game" onPress={reloadApp} />
+        <Text style={styles.answer}>{randomWord}</Text>
+        <View> 
+          <Button style={styles.restart} color="red" title="Restart Game" onPress={restart_game} />
         </View>
       </ScrollView>
       <View>
