@@ -505,7 +505,7 @@ export default function App() {
         </TouchableWithoutFeedback>
         <Text style={styles.sofar}>{result}</Text>
         <Text style={styles.letters}>{letters}</Text>
-        <Text style={styles.answer}>{randomWord}</Text>
+        <Text style={styles.answer}>{answer}</Text>
         <View> 
           <Button style={styles.restart} color="red" title="Restart Game" onPress={restart_game} />
         </View>
